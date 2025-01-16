@@ -1,0 +1,80 @@
+@import 'tailwindcss';
+
+:root {
+  --color-primary: #40a1d0;
+  --font-family-sans: 'Inter', sans-serif;
+  --color-secondary: #05002c;
+  --color-terciary: #04cfca;
+  font-family: var(--font-family-sans);
+  color-scheme: light dark;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+}
+.color-primary {
+  color: var(--color-primary);
+}
+.color-terciary {
+  color: var(--color-terciary);
+}
+
+.accent-primary {
+  accent-color: var(--color-primary);
+}
+.background-primary {
+  background-color: var(--color-primary);
+}
+.background-secondary {
+  background-color: var(--color-secondary);
+}
+a {
+  font-weight: 500;
+  color: var(--color-secondary);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--color-terciary);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: var(--color-terciary);
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
