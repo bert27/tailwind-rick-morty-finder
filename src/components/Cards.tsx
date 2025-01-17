@@ -12,7 +12,7 @@ const Cards: React.FC<CardsProps> = ({ data, loading, error }) => {
   const { foundCharacter } = React.useContext(GlobalContext)!;
 
   return (
-    <div className="w-[70%] min-h-[300px] background-primary flex flex-wrap gap-2" id="column2">
+    <>
       {loading && (
         <div className="flex justify-center items-center w-full h-full">
           <div className="spinner-border text-blue-500 animate-spin" style={{ width: '3rem', height: '3rem' }}></div>
@@ -34,7 +34,7 @@ const Cards: React.FC<CardsProps> = ({ data, loading, error }) => {
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

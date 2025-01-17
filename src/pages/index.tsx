@@ -16,12 +16,13 @@ function Index() {
 
       <MessageFound foundCharacter={foundCharacter} />
 
-      <div className="flex w-full">
-        <div className="w-[30%] min-h-[300px] bg-[#05002C] flex justify-center" id="column1">
+      <div className="flex w-full flex-col md:flex-row">
+        <div className="w-full md:w-[30%] min-h-[300px] bg-[#05002C] flex justify-center" id="column1">
           <CustomForm />
         </div>
-
-        <Cards data={data || { results: [] }} loading={loading} error={error} />
+        <div className="w-full md:w-[70%] min-h-[300px] background-primary flex flex-wrap gap-2" id="column2">
+          <Cards data={data || { results: [] }} loading={loading} error={error} />
+        </div>
       </div>
     </div>
   );
