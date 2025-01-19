@@ -3,7 +3,7 @@
 Pequeña app de **React** que utiliza **TypeScript**, **Vite**, **TailwindCSS** y **Vitest**.
 Muestra personajes de Rick y Morty. Mediante unas pequeñas preguntas, encuentra el personaje que coincida con los parámetros.
 
-https://vercel.com/bert27s-projects/tailwind-rick-morty-finder
+https://tailwind-rick-morty-finder.vercel.app/
 
 ## Tecnologías utilizadas
 
