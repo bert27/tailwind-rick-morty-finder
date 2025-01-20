@@ -2,27 +2,38 @@ import { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../context/useGlobalContext';
 import { EndpointResponseMap } from '../services/Service';
 
-interface FetchOptions {
+type ExtractBody<ExtendedType extends keyof EndpointResponseMap> = EndpointResponseMap[ExtendedType] extends { body: infer B } ? B : never;
+
+interface FetchOptions<ExtendedType extends keyof EndpointResponseMap> {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
   headers?: Record<string, string>;
-  body?: any;
+  body?: ExtractBody<ExtendedType>;
   customErrorMessage?: string;
 }
 
-interface FetchResponse<T> {
-  data: T | null;
+interface FetchResponse<ExtendedType extends keyof EndpointResponseMap> {
+  data: EndpointResponseMap[ExtendedType]['response'] | null;
   loading: boolean;
   error: string | null;
-  refetch: (overrideOptions?: FetchOptions) => void;
+  refetch: (overrideOptions?: FetchOptions<ExtendedType>) => void;
 }
 
-export function useFetch<T extends keyof EndpointResponseMap>(url: T, options?: FetchOptions): FetchResponse<EndpointResponseMap[T]> {
+/**
+ * Hook useFetch
+ * @param url - URL del endpoint (key de EndpointResponseMap).
+ * @param options - FetchOptions tipadas según el endpoint.
+ */
+export function useFetch<ExtendedType extends keyof EndpointResponseMap>(
+  url: ExtendedType,
+  options?: FetchOptions<ExtendedType>
+): FetchResponse<ExtendedType> {
   const { cache, setCache } = useContext(GlobalContext)!;
-  const [data, setData] = useState<EndpointResponseMap[T] | null>(null);
+
+  const [data, setData] = useState<EndpointResponseMap[ExtendedType]['response'] | null>(null);
   const [loading, setLoading] = useState<boolean>(!cache[url]);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = async (overrideOptions?: FetchOptions) => {
+  const fetchData = async (overrideOptions?: FetchOptions<ExtendedType>) => {
     try {
       setLoading(true);
       setError(null);
@@ -40,7 +51,7 @@ export function useFetch<T extends keyof EndpointResponseMap>(url: T, options?: 
         return;
       }
 
-      const result: EndpointResponseMap[T] = await response.json();
+      const result = (await response.json()) as EndpointResponseMap[ExtendedType]['response'];
       setCache(url, result);
       setData(result);
     } catch (err) {
@@ -54,14 +65,14 @@ export function useFetch<T extends keyof EndpointResponseMap>(url: T, options?: 
 
   useEffect(() => {
     if (!cache[url]) {
-      fetchData();
+      void fetchData();
     } else {
       setData(cache[url]);
     }
   }, [url, cache]);
 
-  const refetch = (overrideOptions?: FetchOptions) => {
-    fetchData(overrideOptions);
+  const refetch = (overrideOptions?: FetchOptions<ExtendedType>) => {
+    void fetchData(overrideOptions);
   };
 
   return { data, loading, error, refetch };
