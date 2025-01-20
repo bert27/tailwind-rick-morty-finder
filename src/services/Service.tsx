@@ -1,4 +1,3 @@
-// Define las interfaces como ya las tienes
 export interface Origin {
   name: string;
   url: string;
@@ -40,12 +39,8 @@ export const BASE_URL = 'https://rickandmortyapi.com/api';
 
 export const endpoints = {
   characters: `${BASE_URL}/character`,
-  locations: `${BASE_URL}/location`,
-  episodes: `${BASE_URL}/episode`,
 } as const;
 
 export type EndpointResponseMap = {
   [endpoints.characters]: ApiResponse;
-  [endpoints.locations]: any;
-  [endpoints.episodes]: any;
 };

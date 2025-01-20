@@ -6,6 +6,7 @@ interface FetchOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
   headers?: Record<string, string>;
   body?: any;
+  customErrorMessage?: string;
 }
 
 interface FetchResponse<T> {
@@ -15,9 +16,9 @@ interface FetchResponse<T> {
   refetch: (overrideOptions?: FetchOptions) => void;
 }
 
-export function useFetch<URL extends keyof EndpointResponseMap>(url: URL, options?: FetchOptions): FetchResponse<EndpointResponseMap[URL]> {
+export function useFetch<T extends keyof EndpointResponseMap>(url: T, options?: FetchOptions): FetchResponse<EndpointResponseMap[T]> {
   const { cache, setCache } = useContext(GlobalContext)!;
-  const [data, setData] = useState<EndpointResponseMap[URL] | null>(cache[url] || null);
+  const [data, setData] = useState<EndpointResponseMap[T] | null>(null);
   const [loading, setLoading] = useState<boolean>(!cache[url]);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,14 +35,18 @@ export function useFetch<URL extends keyof EndpointResponseMap>(url: URL, option
       });
 
       if (!response.ok) {
-        throw new Error(`Error en la solicitud: ${response.statusText}`);
+        const errorMessage = `${finalOptions.customErrorMessage || 'Error fetching data'}: ${response.statusText}`;
+        setError(errorMessage);
+        return;
       }
 
-      const result = await response.json();
+      const result: EndpointResponseMap[T] = await response.json();
       setCache(url, result);
       setData(result);
     } catch (err) {
-      setError((err as Error).message);
+      const customErrorMessage = options?.customErrorMessage || 'Error desconocido';
+      const errorMessage = `${customErrorMessage}: ${(err as Error).message}`;
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -53,7 +58,7 @@ export function useFetch<URL extends keyof EndpointResponseMap>(url: URL, option
     } else {
       setData(cache[url]);
     }
-  }, [url, cache, fetchData]);
+  }, [url, cache]);
 
   const refetch = (overrideOptions?: FetchOptions) => {
     fetchData(overrideOptions);
