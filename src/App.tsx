@@ -1,11 +1,11 @@
 import './App.css';
 import { GlobalProvider } from './context/useGlobalContext';
-import Index from './pages';
+import PrincipalPage from './pages/PrincipalPage';
 
 function App() {
   return (
     <GlobalProvider>
-      <Index />
+      <PrincipalPage />
     </GlobalProvider>
   );
 }
