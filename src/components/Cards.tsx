@@ -1,6 +1,6 @@
 import React from 'react';
-import { Character } from '../services/Service';
 import { GlobalContext } from '../context/useGlobalContext';
+import { Character } from '../models/interfaces';
 
 interface CardsProps {
   data: { results: Character[] };

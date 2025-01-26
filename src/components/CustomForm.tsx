@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { GlobalContext } from '../context/useGlobalContext';
-import { Character } from '../services/Service';
 import RadioGroup from './RadioGroup';
+import { Character } from '../models/interfaces';
 
 const schema = z.object({
   gender: z.enum(['Male', 'Female'], { message: 'Selecciona un género válido' }),

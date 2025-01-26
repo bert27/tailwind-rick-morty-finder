@@ -1,5 +1,5 @@
 import React, { createContext, useState, ReactNode } from 'react';
-import { Character } from '../services/Service';
+import { Character } from '../models/interfaces';
 
 interface GlobalContextType {
   cache: Record<string, any>;
