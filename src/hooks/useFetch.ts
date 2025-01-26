@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from 'react';
-import { GlobalContext } from '../context/useGlobalContext';
-import { EndpointResponseMap } from '../services/Service';
+import { useState, useEffect } from 'react';
+import { useGlobalContext } from 'context/useGlobalContext';
+import { EndpointResponseMap } from 'services/Service';
 
 type ExtractBody<ExtendedType extends keyof EndpointResponseMap> = EndpointResponseMap[ExtendedType] extends { body: infer B } ? B : never;
 
@@ -27,7 +27,7 @@ export function useFetch<ExtendedType extends keyof EndpointResponseMap>(
   url: ExtendedType,
   options?: FetchOptions<ExtendedType>
 ): FetchResponse<ExtendedType> {
-  const { cache, setCache } = useContext(GlobalContext)!;
+  const { cache, setCache } = useGlobalContext();
 
   const [data, setData] = useState<EndpointResponseMap[ExtendedType]['response'] | null>(null);
   const [loading, setLoading] = useState<boolean>(!cache[url]);

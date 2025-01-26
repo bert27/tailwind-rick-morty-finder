@@ -1,12 +1,12 @@
-import { useContext } from 'react';
-import { useFetch } from '../hooks/useFetch';
-import { endpoints } from '../services/Service';
-import { GlobalContext } from '../context/useGlobalContext';
-import { CustomForm, MessageFound, Cards } from '../components';
+import { useFetch } from 'hooks/useFetch';
+import { endpoints } from 'services/Service';
+import { useGlobalContext } from 'context/useGlobalContext';
+import { CustomForm, MessageFound, Cards } from 'components';
 
 function PrincipalPage() {
   const { data, loading, error } = useFetch(endpoints.characters);
-  const { foundCharacter } = useContext(GlobalContext)!;
+
+  const { foundCharacter } = useGlobalContext();
 
   return (
     <div className="flex flex-col items-center gap-4 min-h-screen">

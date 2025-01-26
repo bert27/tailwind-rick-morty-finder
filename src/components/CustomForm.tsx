@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { GlobalContext } from '../context/useGlobalContext';
-import RadioGroup from './RadioGroup';
-import { Character } from '../models/interfaces';
+import { useGlobalContext } from 'context/useGlobalContext';
+import RadioGroup from 'components/RadioGroup';
+import { Character } from 'models/Interfaces';
 
 const schema = z.object({
   gender: z.enum(['Male', 'Female'], { message: 'Selecciona un género válido' }),
@@ -23,7 +23,7 @@ const CustomForm: React.FC = () => {
     resolver: zodResolver(schema),
   });
 
-  const { cache, setFoundCharacter } = useContext(GlobalContext)!;
+  const { cache, setFoundCharacter } = useGlobalContext();
   const characters: Character[] = cache['https://rickandmortyapi.com/api/character']?.results || [];
 
   const onSubmit = (data: FormData) => {

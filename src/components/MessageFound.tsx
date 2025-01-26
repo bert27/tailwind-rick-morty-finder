@@ -1,5 +1,5 @@
 import React from 'react';
-import { Character } from '../models/interfaces';
+import { Character } from 'models/Interfaces';
 
 interface MessageFoundProps {
   foundCharacter: Character | null | undefined;

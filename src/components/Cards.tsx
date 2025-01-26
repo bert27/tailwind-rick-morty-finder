@@ -1,6 +1,6 @@
 import React from 'react';
-import { GlobalContext } from '../context/useGlobalContext';
-import { Character } from '../models/interfaces';
+import { useGlobalContext } from 'context/useGlobalContext';
+import { Character } from 'models/Interfaces';
 
 interface CardsProps {
   data: { results: Character[] };
@@ -9,7 +9,7 @@ interface CardsProps {
 }
 
 const Cards: React.FC<CardsProps> = ({ data, loading, error }) => {
-  const { foundCharacter } = React.useContext(GlobalContext)!;
+  const { foundCharacter } = useGlobalContext();
 
   return (
     <>
