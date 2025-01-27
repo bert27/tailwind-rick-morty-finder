@@ -2,10 +2,10 @@ import { useFetch } from 'hooks/useFetch';
 import { endpoints } from 'services/Service';
 import { useGlobalContext } from 'context/useGlobalContext';
 import { CustomForm, MessageFound, Cards } from 'components';
+import { ApiResponse } from '@/models/Interfaces';
 
 function PrincipalPage() {
-  const { data, loading, error } = useFetch(endpoints.characters);
-
+  const { data, loading, error } = useFetch<ApiResponse>(endpoints.characters);
   const { foundCharacter } = useGlobalContext();
 
   return (
